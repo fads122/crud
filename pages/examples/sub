@@ -1,0 +1,17 @@
+     <?php 
+                                
+                                /*
+                                $u_id = $row['ID'];
+                                if(isset($_POST['submit'])){
+                                    $fname = $_POST['firstname'];
+                                    $mname = $_POST['midname'];
+                                    $lname = $_POST['lastname'];
+                                    $school = $_POST['address'];
+                                    $school = $_POST['school'];
+                                    {
+                                    mysqlii_query($con, "UPDATE `students` SET `ID`='',`firstname`='$fname',`midname`='$midname'
+                                    ,`lastname`='$lastname',`school`='$school',`address`='$address' WHERE ID = '$u_id'");
+                                    }
+                                }
+                            }
+                       */ 
