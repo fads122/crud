@@ -1,7 +1,35 @@
-﻿<!DOCTYPE html>
-<?php
-    include "connection1.php";
+﻿<?php
+   session_start();
+   require 'connection1.php';
+
+   if(isset($_POST["submit"])){
+     $uname = $_POST["adname"];
+     $pass = $_POST["adpassword"];
+     $result = mysqli_query($con, "SELECT * FROM adminlogin WHERE adname = '$uname'");
+     $row = mysqli_fetch_assoc($result);
+     if(mysqli_num_rows($result) > 0){
+
+       if($pass == $row['adpass']){
+         $_SESSION["adminlogin"] = true;
+         $_SESSION["adID"] = $row["adID"];
+         echo "<script>alert('LOGIN SUCCESS!'); </script>";
+         echo "<script>window.location.assign('normal-tables.php');</script>" ;
+       }
+
+       else{
+         echo
+         "<script> alert('mali ang password na ginamit!'); </script>";
+         
+       }
+     }
+     else{
+       echo
+       "<script> alert('Di pa naka rehistro ang gumagamit'); </script>";
+      
+     }
+   }
 ?>
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -36,14 +64,14 @@
         </div>
         <div class="card">
             <div class="body">
-                <form action="insert2.php">
+                <form action="" name="adminlogin" method="POST">
                     <div class="msg">Sign in to start your session</div>
                     <div class="input-group">
                         <span class="input-group-addon">
                             <i class="material-icons">person</i>
                         </span>
                         <div class="form-line">
-                            <input type="text" class="form-control" name="email" placeholder="Username" required autofocus>
+                            <input type="text" class="form-control" name="adname" placeholder="Username" required autofocus>
                         </div>
                     </div>
                     <div class="input-group">
@@ -51,7 +79,7 @@
                             <i class="material-icons">lock</i>
                         </span>
                         <div class="form-line">
-                            <input type="password" class="form-control" name="password" placeholder="Password" required>
+                            <input type="password" class="form-control" name="adpassword" placeholder="Password" required>
                         </div>
                     </div>
                     <div class="row">
@@ -60,7 +88,7 @@
                             <label for="rememberme">Remember Me</label>
                         </div>
                         <div class="col-xs-4">
-                            <button class="btn btn-block bg-pink waves-effect" name="signin_form_get" type="submit">SIGN IN</button>
+                            <button class="btn btn-block bg-pink waves-effect" name="submit" type="submit">SIGN IN</button>
                         </div>
                     </div>
                     <div class="row m-t-15 m-b--20">

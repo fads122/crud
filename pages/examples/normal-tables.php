@@ -286,7 +286,7 @@
                             <li><a href="javascript:void(0);"><i class="material-icons">shopping_cart</i>Sales</a></li>
                             <li><a href="javascript:void(0);"><i class="material-icons">favorite</i>Likes</a></li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="sign-in1.php"><i class="material-icons">input</i>Sign Out</a></li>
+                            <li><a href="logout.php"><i class="material-icons">input</i>Sign Out</a></li>
                         </ul>
                     </div>
                 </div>
@@ -309,15 +309,13 @@
                             <li class="active">
                                 <a href="normal-tables.php">Student Table</a>
                             </li>
-                            <li>
-                                <a href="../../pages/tables/student_profile.php">Student Profile</a>
-                            </li>
+                           
                             <li>
                                 <a href="student_form.php">Student Form</a>
                             </li>
                         </ul>
                     </li>
-                              </a>
+                              
                     </li>
                 </ul>
             </div>
@@ -403,20 +401,20 @@
         </aside>
         <!-- #END# Right Sidebar -->
     </section>
-
-    <section class="content">
+        <section class="content">
         <div class="container-fluid">
             <div class="block-header">
-                <h2>NORMAL TABLES</h2>
+                <h2>
+                    JQUERY DATATABLES
+                    <small>Taken from <a href="https://datatables.net/" target="_blank">datatables.net</a></small>
+                </h2>
             </div>
-            <!-- Basic Table -->
             <div class="row clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="card">
                         <div class="header">
                             <h2>
-                                BASIC TABLES
-                                <small>Basic example without any additional modification classes</small>
+                                BASIC EXAMPLE
                             </h2>
                             <ul class="header-dropdown m-r--5">
                                 <li class="dropdown">
@@ -424,70 +422,95 @@
                                         <i class="material-icons">more_vert</i>
                                     </a>
                                     <ul class="dropdown-menu pull-right">
-                                        <li><a href="student_form.php">Add another student</a></li>
+                                        
+                                        <li><a href="student_form.php">Add Student   </a></li>
+                                        
                                     </ul>
                                 </li>
                             </ul>
                         </div>
-                        <div class="body table-responsive">
-                            <table class="table">
-                                <thead>
+                        <div class="body">
+                            <div class="table-responsive">
+                            <?php
+                 include "connection1.php";
+
+                    if(isset($_GET['u_id'])){
+                     $u_id = $_GET['u_id'];
+                    $sql_query = "DELETE FROM students_info WHERE ID = '$u_id'";
+                      if ($con->query($sql_query) === TRUE){
+                                  echo "<script>window.alert('SUCCESSFULLY DELETED!!')</script>";
+                header ('Location: normal-tables.php');
+                        }else{
+                          echo "ERROR!";
+                                      }
+                                     }
+
+                                    ?>
+                                
+                                <table class="table table-bordered table-striped table-hover dataTable js-exportable">
+                                
+                                    <thead>
                                     <tr>
                                     
-                                        <th>ID</th>
-                                        <th>FIRST NAME</th>
-                                        <th>MIDDLE NAME</th>
-                                        <th>LAST NAME</th>
-                                        <th>BIRTH DATE</th>
-                                        <th>GENDER</th>
-                                        <th>SCHOOL</th>
-                                        <th>ADDRESS</th>
-                                        <th>ACTION</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                <?php
-                                
-                                include "connection1.php";
-                               
+                                    <th>ID</th>
+                                    <th>FIRST NAME</th>
+                                    <th>MIDDLE NAME</th>
+                                    <th>LAST NAME</th>
+                                    <th>BIRTH DATE</th>
+                                    <th>GENDER</th>
+                                    <th>SCHOOL</th>
+                                    <th>ADDRESS</th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <?php
                             
-                                    $sql_query = "SELECT * FROM students_info";
-                                    
-                                    $result = $con -> query($sql_query);
-                                    
-                                    while($row = $result -> fetch_assoc()){
-                                        $u_id = $row['ID'];
+                            include "connection1.php";
+                            
+                                $sql_query = "SELECT * FROM students_info";
+                                
+                                $result = $con -> query($sql_query);
+                                
+                                while($row = $result -> fetch_assoc()){
+                                    $u_id = $row['ID'];
+                                
+                                ?>
+                                    <tr>
+                                        <td><?php echo $row['ID']; ?></td>
+                                        <td><?php echo $row['firstname']; ?></td>
+                                        <td><?php echo $row['midname']; ?></td>
+                                        <td><?php echo $row['lastname']; ?></td>
+                                        <td><?php echo $row['birthdate']; ?></td>
+                                        <td><?php echo $row['gender']; ?></td>
+                                        <td><?php echo $row['school']; ?></td>
+                                        <td><?php echo $row['address']; ?></td>
+                                        <td>
+                                            <a href= "edit.php?u_id=<?php echo $u_id; ?>">
+                                            <button type="button" data-color="blue" class="btn bg-green waves-effect">UPDATE</button></a>
+                                            <button type="button" data-color="red" 
+                                            data-toggle="modal" data-target="#modal_ko<?php echo $row['ID']?>"
+                                             class="btn bg-red waves-effect">DELETE</button>
+                                             <a href= "profile.php?u_id=<?php echo $u_id; ?>">
+                                            <button type="button" data-target="#modal_ko"data-color="blue" class="btn bg-blue waves-effect">VIEW</button></a>
+                                        </td>
+                                        <?php include "modal.php";?>
+                                    </tr>
+                                    <?php
+                                     }   
                                     
                                     ?>
-                                        <tr>
-                                            <td><?php echo $row['ID']; ?></td>
-                                            <td><?php echo $row['firstname']; ?></td>
-                                            <td><?php echo $row['midname']; ?></td>
-                                            <td><?php echo $row['lastname']; ?></td>
-                                            <td><?php echo $row['birthdate']; ?></td>
-                                            <td><?php echo $row['gender']; ?></td>
-                                            <td><?php echo $row['school']; ?></td>
-                                            <td><?php echo $row['address']; ?></td>
-                                            <td>
-                                                <a href= "edit.php?u_id=<?php echo $u_id; ?>">EDIT</a>
-                                                <a href= "delete.php?u_id=<?php echo $u_id; ?>">DELETE</a>
-                                                <button type="button" data-color="blue" 
-                                                data-toggle="modal" data-target="#myModal<?php echo $row['ID']?>"
-                                                 class="btn bg-blue waves-effect">VIEW</button>
-                                            </td>
-                                            <?php include ("modal.php");?>
-                                        </tr>
-                                        <?php
-                                            
-                                        }
-                                        ?>
-
-                                </tbody>
-                            </table>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+           
+                                   
+            <!-- #END# Exportable Table -->
+        </div>
             <!-- #END# Basic Table -->
             <!-- Striped Rows -->
             
@@ -515,6 +538,29 @@
 
     <!-- Demo Js -->
     <script src="../../js/demo.js"></script>
+    
+    <!-- Jquery DataTable Plugin Js -->
+    <script src="../../plugins/jquery-datatable/jquery.dataTables.js"></script>
+    <script src="../../plugins/jquery-datatable/skin/bootstrap/js/dataTables.bootstrap.js"></script>
+    <script src="../../plugins/jquery-datatable/extensions/export/dataTables.buttons.min.js"></script>
+    <script src="../../plugins/jquery-datatable/extensions/export/buttons.flash.min.js"></script>
+    <script src="../../plugins/jquery-datatable/extensions/export/jszip.min.js"></script>
+    <script src="../../plugins/jquery-datatable/extensions/export/pdfmake.min.js"></script>
+    <script src="../../plugins/jquery-datatable/extensions/export/vfs_fonts.js"></script>
+    <script src="../../plugins/jquery-datatable/extensions/export/buttons.html5.min.js"></script>
+    <script src="../../plugins/jquery-datatable/extensions/export/buttons.print.min.js"></script>
+
+    <!-- Custom Js -->
+    <script src="../../js/admin.js"></script>
+    <script src="../../js/pages/tables/jquery-datatable.js"></script>
+
+    <!-- Demo Js -->
+    <script src="../../js/demo.js"></script>
+    
 </body>
 
 </html>
+
+
+
+<button type="button" data-color="blue" class="btn bg-blue waves-effect">VIEW</button>

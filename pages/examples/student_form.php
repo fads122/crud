@@ -438,46 +438,49 @@
                                 <label for="firstname">First name</label>
                                 <div class="form-group">
                                     <div class="form-line">
-                                        <input type="text" class="form-control" placeholder="Enter your first name" name="firstname">
+                                        <input type="text" class="form-control" placeholder="Enter your first name" name="firstname" required>
                                     </div>
                                 </div>
                                 <label for="midname">Middle name</label>
                                 <div class="form-group">
                                     <div class="form-line">
-                                        <input type="text"  class="form-control" placeholder="Enter your middle name" name="midname">
+                                        <input type="text"  class="form-control" placeholder="Enter your middle name" name="midname" required>
                                     </div> 
                                 </div>
                                 <label for="lastname">Last name</label>
                                 <div class="form-group">
                                     <div class="form-line">
-                                        <input type="text" class="form-control" placeholder="Enter your last name" name="lastname">
+                                        <input type="text" class="form-control" placeholder="Enter your last name" name="lastname" required>
                                     </div>
                                 </div>
                                 <label for="lastname">Birth Date</label>
                                 <div class="form-group">
                                     <div class="form-line">
-                                        <input type="date" class="form-control" placeholder="Enter your last name" name="birthdate">
+                                        <input type="date" class="form-control" placeholder="Enter your last name" name="birthdate" required>
                                     </div>
                                 </div>
-                                <label for="lastname">Gender</label>
+                                <label for="gender">Gender</label>
                                 <div class="form-group">
-                                    <div class="form-line">
-                                        <input type="text" class="form-control" placeholder="Enter Male or Femlae" name="gender">
+                                    <div  >
+                                        <input name="gender" type="radio" id="radio_1" value="Male" />
+                                        <label for="radio_1">Male</label>
+                                        <input name="gender" type="radio" id="radio_2" value="Female"/>
+                                        <label for="radio_2">Female</label>
                                     </div>
                                 </div>
                                 <label for="school">School</label>
                                 <div class="form-group">
                                     <div class="form-line">
-                                        <input type="text"  class="form-control" placeholder="Enter your school" name="school">
+                                        <input type="text"  class="form-control" placeholder="Enter your school" name="school" required>
                                     </div>
                                 </div>
-
                                 <label for="address">Address</label>
                                 <div class="form-group">
                                     <div class="form-line">
-                                        <input type="text"  class="form-control" placeholder="Enter your address" name="address">
+                                        <input type="text"  class="form-control" placeholder="Enter your address" name="address"required>
                                     </div>
                                 </div>
+            
                                 <br>
                                 <input type="submit" class="btn btn-primary m-t-15 waves-effect" name="submit"></input>
                             </form>
@@ -497,7 +500,9 @@
     VALUES ('$fname','$mname', '$lname', '$bdate', '$gender', '$school', '$address')";
 
     $con -> query($sql_query) or die ($con->error);
+    echo "<script> alert('Student Added Successfully'); </script>";
     echo "<script>window.location='normal-tables.php'</script>";
+    
 }
 ?>
                         </div>

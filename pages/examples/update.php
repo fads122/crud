@@ -9,6 +9,8 @@
         $lname = $_POST['lastname'];
         $bdate = $_POST['birthdate'];
         $gender = $_POST['gender'];
+        $male = $_POST['male'];
+        $female = $_POST['female'];
         $school = $_POST['school'];
         $address = $_POST['address'];
 
@@ -17,7 +19,9 @@
         WHERE ID = '$u_id'";
 
         if ($con -> query($sql_query) === TRUE){
-            header ('Location: normal-tables.php');
+            
+            echo "<script>alert('UDATE SUCCESSFUL'); </script>";
+            echo "<script>window.location.assign('normal-tables.php')</script>" ;
         }
     }
 
